@@ -19,7 +19,7 @@
     <link href="~/Assets/css/style.css" rel="stylesheet" />
 
 </head>
-<body>
+<body onload="updateFav(), updatebadge()">
 
     <!-- header section starts  -->
 
@@ -36,8 +36,16 @@
 
             <div class="icons">
                 <div id="search-btn" class="fas fa-search"></div>
-                <a href="#" class="fas fa-heart"></a>
-                <a onclick="getbasket()" id="basket" class="fas fa-shopping-cart"></a>
+                <a href="/Home/Favourite" class="dropdown-toggle" data-toggle="dropdown">
+                    <span class="fas fa-heart"></span>
+                    <span id="fav_badge" class="badge badge-bg-1"></span>
+                </a>
+
+
+                <a href="/Home/Shop" class="dropdown-toggle" data-toggle="dropdown">
+                    <span class="fas fa-shopping-cart"></span>
+                    <span id="shop_badge" class="badge badge-bg-1"></span>
+                </a>
                 <div id="login-btn" class="fas fa-user"></div>
             </div>
 
@@ -49,10 +57,9 @@
                 <a href="#featured">ویژه</a>
                 <a href="#arrivals">جدیدها</a>
                 <a href="#reviews">نظرات</a>
-                <a href="#blogs">وبلاگ</a>
             </nav>
         </div>
-
+    
     </header>
 
     <!-- header section ends -->
@@ -176,174 +183,12 @@
         <h1 class="heading"> <span>کتابهای برجسته</span> </h1>
 
         <div class="swiper featured-slider">
+            <div  id="products" class="swiper-wrapper">
 
-            <div class="swiper-wrapper">
 
-                <div class="swiper-slide box">
-                    <div class="icons">
-                        <a href="#" class="fas fa-search"></a>
-                        <a href="#" class="fas fa-heart"></a>
-                        <a href="#" class="fas fa-eye"></a>
-                    </div>
-                    <div class="image">
-                        <img src="~/Assets/image/book-1.png" />
-                    </div>
-                    <div class="content">
-                        <h3>کتاب برجسته</h3>
-                        <div class="price">5 هزار تومان <span>10 هزارتومان</span></div>
-                        <a href="#" class="btn">اضافه کردن به سبد خرید</a>
-                    </div>
-                </div>
 
-                <div class="swiper-slide box">
-                    <div class="icons">
-                        <a href="#" class="fas fa-search"></a>
-                        <a href="#" class="fas fa-heart"></a>
-                        <a href="#" class="fas fa-eye"></a>
-                    </div>
-                    <div class="image">
-                        <img src="~/Assets/image/book-2.png" />
-                    </div>
-                    <div class="content">
-                        <h3>کتاب برجسته</h3>
-                        <div class="price">5 هزار تومان <span>10 هزارتومان</span></div>
-                        <a href="#" class="btn">اضافه کردن به سبد خرید</a>
-                    </div>
-                </div>
-
-                <div class="swiper-slide box">
-                    <div class="icons">
-                        <a href="#" class="fas fa-search"></a>
-                        <a href="#" class="fas fa-heart"></a>
-                        <a href="#" class="fas fa-eye"></a>
-                    </div>
-                    <div class="image">
-                        <img src="~/Assets/image/book-3.png" />
-                    </div>
-                    <div class="content">
-                        <h3>کتاب برجسته</h3>
-                        <div class="price">5 هزار تومان <span>10 هزارتومان</span></div>
-                        <a href="#" class="btn">اضافه کردن به سبد خرید</a>
-                    </div>
-                </div>
-
-                <div class="swiper-slide box">
-                    <div class="icons">
-                        <a href="#" class="fas fa-search"></a>
-                        <a href="#" class="fas fa-heart"></a>
-                        <a href="#" class="fas fa-eye"></a>
-                    </div>
-                    <div class="image">
-                        <img src="~/Assets/image/book-4.png" />
-                    </div>
-                    <div class="content">
-                        <h3>کتاب برجسته</h3>
-                        <div class="price">5 هزار تومان <span>10 هزارتومان</span></div>
-                        <a href="#" class="btn">اضافه کردن به سبد خرید</a>
-                    </div>
-                </div>
-
-                <div class="swiper-slide box">
-                    <div class="icons">
-                        <a href="#" class="fas fa-search"></a>
-                        <a href="#" class="fas fa-heart"></a>
-                        <a href="#" class="fas fa-eye"></a>
-                    </div>
-                    <div class="image">
-                        <img src="~/Assets/image/book-5.png" />
-                    </div>
-                    <div class="content">
-                        <h3>کتاب برجسته</h3>
-                        <div class="price">5 هزار تومان <span>10 هزارتومان</span></div>
-                        <a href="#" class="btn">اضافه کردن به سبد خرید</a>
-                    </div>
-                </div>
-
-                <div class="swiper-slide box">
-                    <div class="icons">
-                        <a href="#" class="fas fa-search"></a>
-                        <a href="#" class="fas fa-heart"></a>
-                        <a href="#" class="fas fa-eye"></a>
-                    </div>
-                    <div class="image">
-                        <img src="~/Assets/image/book-6.png" />
-                    </div>
-                    <div class="content">
-                        <h3>کتاب برجسته</h3>
-                        <div class="price">5 هزار تومان <span>10 هزارتومان</span></div>
-                        <a href="#" class="btn">اضافه کردن به سبد خرید</a>
-                    </div>
-                </div>
-
-                <div class="swiper-slide box">
-                    <div class="icons">
-                        <a href="#" class="fas fa-search"></a>
-                        <a href="#" class="fas fa-heart"></a>
-                        <a href="#" class="fas fa-eye"></a>
-                    </div>
-                    <div class="image">
-                        <img src="~/Assets/image/book-7.png" />
-                    </div>
-                    <div class="content">
-                        <h3>کتاب برجسته</h3>
-                        <div class="price">5 هزار تومان <span>10 هزارتومان</span></div>
-                        <a href="#" class="btn">اضافه کردن به سبد خرید</a>
-                    </div>
-                </div>
-
-                <div class="swiper-slide box">
-                    <div class="icons">
-                        <a href="#" class="fas fa-search"></a>
-                        <a href="#" class="fas fa-heart"></a>
-                        <a href="#" class="fas fa-eye"></a>
-                    </div>
-                    <div class="image">
-                        <img src="~/Assets/image/book-8.png" />
-                    </div>
-                    <div class="content">
-                        <h3>کتاب برجسته</h3>
-                        <div class="price">5 هزار تومان <span>10 هزارتومان</span></div>
-                        <a href="#" class="btn">اضافه کردن به سبد خرید</a>
-                    </div>
-                </div>
-
-                <div class="swiper-slide box">
-                    <div class="icons">
-                        <a href="#" class="fas fa-search"></a>
-                        <a href="#" class="fas fa-heart"></a>
-                        <a href="#" class="fas fa-eye"></a>
-                    </div>
-                    <div class="image">
-                        <img src="~/Assets/image/book-9.png" />
-                    </div>
-                    <div class="content">
-                        <h3>کتاب برجسته</h3>
-                        <div class="price">5 هزار تومان <span>10 هزارتومان</span></div>
-                        <a href="#" class="btn">اضافه کردن به سبد خرید</a>
-                    </div>
-                </div>
-
-                <div class="swiper-slide box">
-                    <div class="icons">
-                        <a href="#" class="fas fa-search"></a>
-                        <a href="#" class="fas fa-heart"></a>
-                        <a href="#" class="fas fa-eye"></a>
-                    </div>
-                    <div class="image">
-                        <img src="~/Assets/image/book-10.png" />
-                    </div>
-                    <div class="content">
-                        <h3>کتاب برجسته</h3>
-                        <div class="price">5 هزار تومان <span>10 هزارتومان</span></div>
-                        <a href="#" class="btn">اضافه کردن به سبد خرید</a>
-                    </div>
-                </div>
 
             </div>
-
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-
         </div>
 
     </section>
@@ -374,6 +219,7 @@
 
                 <a href="#" class="swiper-slide box">
                     <div class="image">
+
                         <img src="~/Assets/image/book-1.png" />
                     </div>
                     <div class="content">
@@ -669,78 +515,7 @@
     </section>
 
     <!-- reviews section ends -->
-    <!-- blogs section starts  -->
-
-    <section class="blogs" id="blogs">
-
-        <h1 class="heading"> <span>وبلاگ</span> </h1>
-
-        <div class="swiper blogs-slider">
-
-            <div class="swiper-wrapper">
-
-                <div class="swiper-slide box">
-                    <div class="image">
-                        <img src="~/Assets/image/blog-1.jpg" alt="">
-                    </div>
-                    <div class="content">
-                        <h3>عنوان متن در اینجا</h3>
-                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است </p>
-                        <a href="#" class="btn">مطالعه بیشتر</a>
-                    </div>
-                </div>
-
-                <div class="swiper-slide box">
-                    <div class="image">
-                        <img src="~/Assets/image/blog-2.jpg" alt="">
-                    </div>
-                    <div class="content">
-                        <h3>عنوان متن در اینجا</h3>
-                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است </p>
-                        <a href="#" class="btn">مطالعه بیشتر</a>
-                    </div>
-                </div>
-
-                <div class="swiper-slide box">
-                    <div class="image">
-                        <img src="~/Assets/image/blog-3.jpg" alt="">
-                    </div>
-                    <div class="content">
-                        <h3>عنوان متن در اینجا</h3>
-                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است </p>
-                        <a href="#" class="btn">مطالعه بیشتر</a>
-                    </div>
-                </div>
-
-                <div class="swiper-slide box">
-                    <div class="image">
-                        <img src="~/Assets/image/blog-4.jpg" alt="">
-                    </div>
-                    <div class="content">
-                        <h3>عنوان متن در اینجا</h3>
-                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است </p>
-                        <a href="#" class="btn">مطالعه بیشتر</a>
-                    </div>
-                </div>
-
-                <div class="swiper-slide box">
-                    <div class="image">
-                        <img src="~/Assets/image/blog-5.jpg" alt="">
-                    </div>
-                    <div class="content">
-                        <h3>عنوان متن در اینجا</h3>
-                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است </p>
-                        <a href="#" class="btn">مطالعه بیشتر</a>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- blogs section ends -->
+    
     <!-- footer section starts  -->
 
     <section class="footer">
@@ -763,7 +538,6 @@
                 <a href="#"> <i class="fas fa-arrow-right"></i> ویژه </a>
                 <a href="#"> <i class="fas fa-arrow-right"></i> برجسته </a>
                 <a href="#"> <i class="fas fa-arrow-right"></i> نظرات </a>
-                <a href="#"> <i class="fas fa-arrow-right"></i> وبلاگ </a>
             </div>
 
             <div class="box">
@@ -793,7 +567,6 @@
             <a href="#" class="fab fa-pinterest"></a>
         </div>
 
-        <div class="credit"> فارسی و راست چین شده توسط <a href="https://rtl-html.ir"><span>اچ تی ام ال فارسی</span></a> </div>
 
     </section>
 
@@ -823,6 +596,7 @@
 
     <!-- custom js file link  -->
     <script src="~/Assets/js/script.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="~/Assets/js/js1.js"></script>
 </body>
 </html>
