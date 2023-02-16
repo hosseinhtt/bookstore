@@ -1,0 +1,233 @@
+﻿@{
+    if (Request.Cookies["hashtt@try"] == null)
+    {
+        Response.Redirect("~/Home/Login");
+
+    }
+    else
+    {
+        if (Request.Cookies["hashtt@try"].Value == null)
+        {
+            Response.Redirect("~/Home/Login");
+        }
+
+
+    }
+
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>صفحه پرداخت</title>
+    <link type="text/css" href="~/Assets/css/Shipping/Shipping.css" rel="stylesheet" />
+    <link href="~/Assets/css/index.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+</head>
+<body onload="updatePrice()">
+    @Html.AntiForgeryToken()
+
+
+    <header class="header">
+
+        <div class="header-1">
+
+            <a href="#" class="logo"> <i class="fas fa-book"></i> کتابخانه </a>
+
+
+
+            <div class="icons">
+                <div id="search-btn" class="fas fa-search"></div>
+                <a href="/Home/Favourite" class="dropdown-toggle" data-toggle="dropdown">
+                    <span class="fas fa-heart"></span>
+                    <span id="fav_badge" class="badge badge-bg-1"></span>
+                </a>
+
+
+                <a href="/Home/Shipping" class="dropdown-toggle" data-toggle="dropdown">
+                    <span class="fas fa-shopping-cart"></span>
+                    <span id="shop_badge" class="badge badge-bg-1"></span>
+                </a>
+                <div class="dropdown">
+
+                    <div onclick="myFunction()" class="dropbtn fas fa-user"></div>
+
+                    <div id="myDropdown" class="dropdown-content">
+                        <ul>
+
+                            <li><a href="Login">ورود</a></li>
+                            <li><a href="Profile">پروفایل</a></li>
+                            <li><a href="~/Home/logout">خروج از حساب</a></li>
+                        </ul>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="header-2">
+            <nav class="navbar">
+                <a href="#home">خانه</a>
+                <a href="#featured">ویژه</a>
+                <a href="#arrivals">جدیدها</a>
+                <a href="#reviews">نظرات</a>
+            </nav>
+        </div>
+
+    </header>
+
+    <!-- header section ends -->
+    <!-- bottom navbar  -->
+
+    <nav class="bottom-navbar">
+        <a href="#home" class="fas fa-home"></a>
+        <a href="#featured" class="fas fa-list"></a>
+        <a href="#arrivals" class="fas fa-tags"></a>
+        <a href="#reviews" class="fas fa-comments"></a>
+        <a href="#blogs" class="fas fa-blog"></a>
+    </nav>
+
+
+
+    <section>
+        <div class="content">
+            <h1>سبد خرید</h1>
+            <p>تعداد محصولات را اضافه و کم کنید و سبد خود را آپدیت کنید.</p>
+            <!-- start undo button -->
+            <p class="removeAlert">
+                آیتم مورد نظر حذف شد. اشتباه کردید؟ <a href="#">برگرداندن آیتم</a>
+            </p>
+            <!-- end undo button -->
+
+
+            <table class="items">
+                <thead>
+                    <!-- start table head -->
+                    <tr>
+                        <th>نام محصول</th>
+                        <th>قیمت</th>
+                        <th>تعداد</th>
+                        <th>مجموع</th>
+                    </tr>
+                    <!-- end table head -->
+                </thead>
+                <tbody id="shopingList">
+                    <!-- start table body -->
+                    <!-- end table body -->
+                </tbody>
+            </table>
+
+            <!-- start checkout list -->
+            <div class="cost">
+                <h2>پیش فاکتور</h2>
+
+                <table class="pricing">
+                    <tbody>
+                        <tr>
+                            <td>قیمت کل</td>
+                            <td class="subtotal"></td>
+                        </tr>
+                        <tr>
+                            <td>مالیات</td>
+                            <td class="tax"></td>
+                        </tr>
+                        <tr>
+                            <td>هزینه ارسال</td>
+                            <td class="shipping">100 تومان</td>
+                        </tr>
+                        <tr>
+                            <td><strong>مجموع:</strong></td>
+                            <td class="orderTotal"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a onclick="checkout();" class="cta" href="#">خرید</a>
+            </div><!-- end checkout list -->
+        </div> <!-- End Content -->
+    </section>
+
+    <script src="~/Assets/js/Shipping/jquery-3.1.1.min.js"></script>
+    <script src="~/Assets/js/Shipping/jquery-ui.min.js"></script>
+    <script src="~/Assets/js/Shipping/scripts.js"></script>
+    <script src="~/Assets/js/js1.js"></script>
+    <script src="~/Assets/js/script.js"></script>
+
+    <script>
+
+        function checkout() {
+
+            var basket = window.localStorage.getItem("basket");
+            var token = $('input[name="__RequestVerificationToken"]').val();
+
+            $.post("/Home/invoice", { basket: basket, __RequestVerificationToken: token })
+
+
+                .done(function (res) {
+                    alert("hi1");
+                    if (!res) { window.location.href = "Login"; }
+
+                    if (res.state == 1) {
+                        alert("hi");
+
+                        payment(res.fn, res.price);
+                    }
+
+                });
+
+
+        }
+        function payment(fn, price) {
+
+            var token = $('input[name="__RequestVerificationToken"]').val();
+
+            $.post("/Pay/submit", { fn: fn, price: price, __RequestVerificationToken: token })
+
+                .done(function (res) {
+
+                    if (res.success) {
+
+                        window.location.href = res.message;
+                    }
+
+
+                });
+
+
+        }
+
+
+
+
+    </script>
+    <script>
+        /* When the user clicks on the button,
+        toggle between hiding and showing the dropdown content */
+        function myFunction() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function (event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
+
+
+</body><!-- This template has been downloaded from Webrubik.com -->
+</html>

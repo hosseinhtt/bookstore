@@ -1,5 +1,15 @@
 ﻿@{
     ViewBag.Title = "Index";
+    string userName = "";
+
+    if (Session["userName"] == null)
+    {
+        Html.RenderAction("setname", "Home");
+
+    }
+    userName = Session["userName"].ToString();
+
+
 }
 
 <!DOCTYPE html>
@@ -8,7 +18,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>قالب فروشگاه آنلاین کتاب | نت کپی </title>
+    <title> فروشگاه آنلاین کتاب </title>
 
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
 
@@ -16,10 +26,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <!-- custom css file link  -->
-    <link href="~/Assets/css/style.css" rel="stylesheet" />
+    <link href="~/Assets/css/index.css" rel="stylesheet" />
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
 
 </head>
-<body onload="updateFav(), updatebadge()">
+<body onload="updatebadge()">
+    <!--Html.AntiForgeryToken()-->
+
 
     <!-- header section starts  -->
 
@@ -42,15 +57,30 @@
                 </a>
 
 
-                <a href="/Home/Shop" class="dropdown-toggle" data-toggle="dropdown">
+                <a href="/Home/Shipping" class="dropdown-toggle" data-toggle="dropdown">
                     <span class="fas fa-shopping-cart"></span>
                     <span id="shop_badge" class="badge badge-bg-1"></span>
                 </a>
-                <div id="login-btn" class="fas fa-user"></div>
+                <div class="dropdown">
+
+                    <div onclick="myFunction()" class="dropbtn fas fa-user"></div>
+
+                    <div id="myDropdown" class="dropdown-content">
+                        <ul>
+                            <li><a id="login-btn" href="#home">ورود یا ثبت نام</a></li>
+                            <li><a href="Login">ورود</a></li>
+                            <li><a href="Profile">پروفایل</a></li>
+                            <li><a href="~/Home/logout">خروج از حساب</a></li>
+                        </ul>
+
+
+                    </div>
+                    <a href="#">"@userName"</a>
+
+                </div>
+
             </div>
-
         </div>
-
         <div class="header-2">
             <nav class="navbar">
                 <a href="#home">خانه</a>
@@ -59,7 +89,7 @@
                 <a href="#reviews">نظرات</a>
             </nav>
         </div>
-    
+
     </header>
 
     <!-- header section ends -->
@@ -75,23 +105,23 @@
 
     <!-- login form  -->
 
-    <div class="login-form-container">
+    <div id="deactive" class="login-form-container">
 
         <div id="close-login-btn" class="fas fa-times"></div>
 
         <form action="">
             <h3>ورود</h3>
             <span>نام کاربری</span>
-            <input type="email" name="" class="box" placeholder="ایمیل خود را وارد کنید" id="">
+            <input type="number" name="" class="box" placeholder="شماره خود را وارد کنید" id="phone">
             <span>رمز عبور</span>
-            <input type="password" name="" class="box" placeholder="رمز عبور خود را وارد کنید" id="">
+            <input type="password" name="" class="box" placeholder="رمز عبور خود را وارد کنید" id="psw">
             <div class="checkbox">
                 <input type="checkbox" name="" id="remember-me">
                 <label for="remember-me"> به خاطر سپردن</label>
             </div>
-            <input type="submit" value="sign in" class="btn">
+            <button onclick="getlogin()" class="btn">ساخت یا ورود به حساب</button>
             <p>رمز خود را فراموش کرده اید ؟ <a href="#">اینجا کلیک کنید</a></p>
-            <p>ثبت نام نکرده اید ؟ <a href="#">ساخت حساب</a></p>
+
         </form>
 
     </div>
@@ -111,22 +141,22 @@
             <div class="swiper books-slider">
                 <div class="swiper-wrapper">
                     <a href="#" class="swiper-slide">
-                        <img src="~/Assets/image/book-1.png" />
+                        <img src="~/Assets/image/book1.png" />
                     </a>
                     <a href="#" class="swiper-slide">
-                        <img src="~/Assets/image/book-2.png" />
+                        <img src="~/Assets/image/book2.png" />
                     </a>
                     <a href="#" class="swiper-slide">
-                        <img src="~/Assets/image/book-3.png" />>
+                        <img src="~/Assets/image/book3.png" />>
                     </a>
                     <a href="#" class="swiper-slide">
-                        <img src="~/Assets/image/book-4.png" />
+                        <img src="~/Assets/image/book4.png" />
                     </a>
                     <a href="#" class="swiper-slide">
-                        <img src="~/Assets/image/book-5.png" />
+                        <img src="~/Assets/image/book5.png" />
                     </a>
                     <a href="#" class="swiper-slide">
-                        <img src="~/Assets/image/book-6.png" />
+                        <img src="~/Assets/image/book6.png" />
                     </a>
                 </div>
                 <img src="~/Assets/image/stand.png" class="stand" alt="" />
@@ -183,7 +213,7 @@
         <h1 class="heading"> <span>کتابهای برجسته</span> </h1>
 
         <div class="swiper featured-slider">
-            <div  id="products" class="swiper-wrapper">
+            <div id="products" class="swiper-wrapper">
 
 
 
@@ -515,7 +545,6 @@
     </section>
 
     <!-- reviews section ends -->
-    
     <!-- footer section starts  -->
 
     <section class="footer">
@@ -598,5 +627,26 @@
     <script src="~/Assets/js/script.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="~/Assets/js/js1.js"></script>
+    <script>
+        /* When the user clicks on the button,
+        toggle between hiding and showing the dropdown content */
+        function myFunction() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function (event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
 </body>
 </html>

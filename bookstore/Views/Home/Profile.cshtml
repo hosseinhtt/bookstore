@@ -1,0 +1,295 @@
+﻿@{
+
+    
+
+    if (Request.Cookies["hashtt@try"] == null)
+    {
+        Response.Redirect("~/Home/Login");
+
+    }
+    else
+    {
+        if (Request.Cookies["hashtt@try"].Value == null)
+        {
+            Response.Redirect("~/Home/Login");
+        }
+
+       
+
+
+
+
+
+
+    }
+
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>صفحه پروفایل کاربری </title>
+    <link href="~/Assets/css/Profile/bootstrap-rtl.css" rel="stylesheet" />
+    <link href="~/Assets/css/Profile/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Assets/css/Profile/Ptofile.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/f14cbea078.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <!-- font awesome cdn link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body  class="profile-page" data-spy="scroll" data-target=".navbar" data-offset="50">
+    @Html.AntiForgeryToken()
+    <!-- The HEADER -->
+    <!-- sidebar -->
+    <main>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3 col-sm-4 col-xs-12">
+                    <!-- navigation side bar + tab -->
+                    <ul class="nav nav-pills nav-pills-success nav-stacked">
+                        <li class="active"><a data-toggle="pill" href="#about">اطلاعات کاربری</a></li>
+
+
+                        <li><a data-toggle="pill" href="#contact">ارتباط با پشتیبان سایت</a></li>
+                        <li><a data-toggle="pill" href="#wishlist">لیست علاقه مندی ها</a></li>
+                        <li><a></a></li>
+                        <li><a></a></li>
+                        <li><a></a></li>
+                        <li><a></a></li>
+                        <li><a></a></li>
+                        <li><a></a></li>
+
+
+
+                    </ul>
+
+
+
+                </div>
+
+
+                <!-- start tab content -->
+                <div class="col-md-6 col-sm-8 col-xs-12">
+                    <div class="tab-content">
+                        <!-- about -->
+                        <div class="tab-pane fade in active">
+
+                            <div id="edit-btn">
+                                <a href="#" onclick="makeEdit()"><span class="fas fa-pencil"></span></a>
+                                <span>اطلاعات کاربری</span>
+
+                            </div>
+                            <br />
+
+                            <div id="about">
+                                <p>
+                                    <span><i class="fa fa-user-circle"></i><strong>نام:</strong></span>
+
+                                    <input class="editable" type="text" value="@ViewBag.Name" name="name" id="fname" required>
+                                </p>
+                                <p>
+                                    <span><i class="fa fa-dot-circle-o"></i><strong>نام خانوادگی :</strong></span>
+                                    <input class="editable" type="text" value="@ViewBag.Family" name="" id="lname" required>
+                                </p>
+
+                                <p>
+                                    <span><i class="fa fa-phone"></i><strong>تلفن تماس :</strong></span>
+                                    <input class="editable" type="number" value="@ViewBag.Phone" name="" id="phone" required>
+                                </p>
+                                <p>
+                                    <span><i class="fa fa-envelope"></i><strong>پست الکترونیک :</strong></span>
+                                    <input class="editable" type="email" value="@ViewBag.Email" name="" id="email" required>
+                                </p>
+                                <p>
+                                    <span><i class="fa fa-key"></i><strong>رمز عبور :</strong></span>
+                                    <input class="editable" type="password" value="@ViewBag.Password" name="" id="password" required>
+                                </p>
+                                <p>
+                                    <span><i class="fa fa-map-marker"></i><strong>آدرس :</strong></span>
+                                    <input class="editable" type="text" value="@ViewBag.Address" name="" id="address" required>
+                                </p>
+                                <button class="btn btn-success" onclick="register()">ثبت </button>
+                            </div>
+                        </div>
+
+
+                        <!-- contact form -->
+                        <div id="contact" class="tab-pane fade">
+                            <h3>ارتباط با پشتیبان سایت</h3>
+                            <div class="card card-signup">
+                                <form class="form" method="post" action="">
+                                    <div class="content">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-user-circle"></i>نام
+                                            </span>
+                                            <input type="text" class="form-control" placeholder="نام و نام خانوادگی">
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-envelope"></i>پست الکترونیک
+                                            </span>
+                                            <input type="text" class="form-control" placeholder="پست الکترونیک">
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-pencil"></i>متن پیام
+                                            </span>
+                                            <textarea placeholder="متن پیام ..." class="form-control" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="footer text-center">
+                                        <a href="#" class="btn btn-simple btn-success btn-lg text-blue">ارسال پیام</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- wishlist form -->
+                        <div id="wishlist" class="tab-pane fade">
+                            <h3>لیست علاقه مندی های من</h3>
+
+                            <div class="card card-signup">
+                                <table class="shop_table cart wishlist_table wishlist_view traditional responsive   "
+                                       data-pagination="no" data-per-page="5" data-page="1"
+                                       data-id="508107" data-token="90T8O6CCEZ4I">
+
+
+                                    <thead>
+                                        <tr>
+
+                                            <th class="product-remove">
+                                                <span class="nobr">
+                                                </span>
+                                            </th>
+
+                                            <th class="product-thumbnail"></th>
+
+                                            <th class="product-name">
+                                                <span class="nobr">
+                                                    نام محصول
+                                                </span>
+                                            </th>
+
+                                            <th class="product-price">
+                                                <span class="nobr">
+                                                    قیمت
+                                                </span>
+                                            </th>
+
+
+                                            <th class="product-stock-status">
+                                                <span class="nobr">
+                                                    وضعیت موجودی
+                                                </span>
+                                            </th>
+
+                                            <th class="product-add-to-cart">
+                                                <span class="nobr">
+                                                </span>
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+
+                                    <tbody class="wishlist-items-wrapper">
+                                        <tr id="yith-wcwl-row-39247" data-row-id="39247">
+
+                                            <td class="product-remove">
+                                                <div>
+                                                    <a href="" class="remove remove_from_wishlist" title="حذف این محصول">&times;</a>
+                                                </div>
+                                            </td>
+
+                                            <td class="product-thumbnail">
+
+                                                <a href="">
+                                                    <img width="247" height="296" src="" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="" />
+                                                </a>
+
+                                            </td>
+
+                                            <td class="product-name">
+
+                                                <a href="">
+                                                    غذای خشک گربه بالغ، گرمه، چند رنگ، مرغ و برنج، 2 کیلوگرمی، رفلکس
+                                                </a>
+
+
+                                            </td>
+
+                                            <td class="product-price">
+
+                                                <span class="woocommerce-Price-amount amount">۴۸۹,۰۰۰&nbsp;<span class="woocommerce-Price-currencySymbol">تومان</span></span>
+                                            </td>
+
+
+                                            <td class="product-stock-status">
+
+                                                <span class="wishlist-in-stock">موجود</span>
+                                            </td>
+
+                                            <td class="product-add-to-cart">
+
+                                                <!-- Date added -->
+                                                <!-- Add to cart button -->
+                                                <a href="#" onclick="addtocard()" data-quantity="1" class="wp-element-button product_type_simple add_to_cart_button ajax_add_to_cart add_to_cart alt" data-product_id="39247" data-product_sku="Ref045" aria-label="افزودن &ldquo;غذای خشک گربه بالغ، گرمه، چند رنگ، مرغ و برنج، 2 کیلوگرمی، رفلکس&rdquo; به سبد" rel="nofollow">افزودن به سبد</a>
+
+                                                <!-- Change wishlist -->
+                                                <!-- Remove from wishlist -->
+
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- left sidebar friends status -->
+
+    </main>
+
+    <!-- page footer -->
+    <footer class="footer">
+        <div class="container">
+            <nav class="pull-left">
+                <div id="share-buttons">
+                    <a href="#" target="_blank">
+                        <i class="fas fa-facebook-square"></i>
+                    </a>
+                    <a href="#" target="_blank">
+                        <i class="fas fa-twitter-square"></i>
+                    </a>
+                    <a href="#" target="_blank">
+                        <i class="fas fa-instagram"></i>
+                    </a>
+                    <a href="#" target="_blank">
+                        <i class="fas fa-telegram"></i>
+                    </a>
+                </div>
+            </nav>
+
+        </div>
+    </footer>
+
+    <script src="~/Assets/js/Profile/jquery-3.1.1.min.js"></script>
+    <script src="~/Assets/js/Profile/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+    <script src="~/Assets/js/Profile/Profile.js">
+    </script>
+    <script src="~/Assets/js/js1.js"></script>
+</body><!-- This template has been downloaded from Webrubik.com -->
+</html>

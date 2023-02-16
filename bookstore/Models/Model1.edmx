@@ -5,6 +5,18 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="BookStoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Table_Invoice">
+          <Key>
+            <PropertyRef Name="pkID" />
+          </Key>
+          <Property Name="pkID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fkUserID" Type="int" Nullable="false" />
+          <Property Name="fkProductID" Type="int" Nullable="false" />
+          <Property Name="status" Type="bit" Nullable="false" />
+          <Property Name="transID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="trackingID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="factorNumber" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Table_Products">
           <Key>
             <PropertyRef Name="pkID" />
@@ -14,8 +26,92 @@
           <Property Name="Image" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Price" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Table_Users">
+          <Key>
+            <PropertyRef Name="pkID" />
+          </Key>
+          <Property Name="pkID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Family" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone" Type="char" MaxLength="11" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="Address1" Type="nvarchar" MaxLength="200" />
+          <Property Name="Address2" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Tayebi7131_BookStore.Tayebi7131_Toranj.View_Invoice' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_Invoice">
+          <Key>
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Price" />
+            <PropertyRef Name="pkID" />
+            <PropertyRef Name="fkUserID" />
+            <PropertyRef Name="fkProductID" />
+            <PropertyRef Name="status" />
+            <PropertyRef Name="transID" />
+            <PropertyRef Name="trackingID" />
+            <PropertyRef Name="factorNumber" />
+          </Key>
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price" Type="int" Nullable="false" />
+          <Property Name="pkID" Type="int" Nullable="false" />
+          <Property Name="fkUserID" Type="int" Nullable="false" />
+          <Property Name="fkProductID" Type="int" Nullable="false" />
+          <Property Name="status" Type="bit" Nullable="false" />
+          <Property Name="transID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="trackingID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="factorNumber" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Table_Invoice_Table_Products">
+          <End Role="Table_Products" Type="Self.Table_Products" Multiplicity="1" />
+          <End Role="Table_Invoice" Type="Self.Table_Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_Products">
+              <PropertyRef Name="pkID" />
+            </Principal>
+            <Dependent Role="Table_Invoice">
+              <PropertyRef Name="fkProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_Invoice_Table_Users">
+          <End Role="Table_Users" Type="Self.Table_Users" Multiplicity="1" />
+          <End Role="Table_Invoice" Type="Self.Table_Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_Users">
+              <PropertyRef Name="pkID" />
+            </Principal>
+            <Dependent Role="Table_Invoice">
+              <PropertyRef Name="fkUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="BookStoreModelStoreContainer">
+          <EntitySet Name="Table_Invoice" EntityType="Self.Table_Invoice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Table_Products" EntityType="Self.Table_Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_Users" EntityType="Self.Table_Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="View_Invoice" EntityType="Self.View_Invoice" store:Type="Views" store:Schema="Tayebi7131_Toranj">
+            <DefiningQuery>SELECT 
+    [View_Invoice].[Name] AS [Name], 
+    [View_Invoice].[Price] AS [Price], 
+    [View_Invoice].[pkID] AS [pkID], 
+    [View_Invoice].[fkUserID] AS [fkUserID], 
+    [View_Invoice].[fkProductID] AS [fkProductID], 
+    [View_Invoice].[status] AS [status], 
+    [View_Invoice].[transID] AS [transID], 
+    [View_Invoice].[trackingID] AS [trackingID], 
+    [View_Invoice].[factorNumber] AS [factorNumber]
+    FROM [Tayebi7131_Toranj].[View_Invoice] AS [View_Invoice]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Table_Invoice_Table_Products" Association="Self.FK_Table_Invoice_Table_Products">
+            <End Role="Table_Products" EntitySet="Table_Products" />
+            <End Role="Table_Invoice" EntitySet="Table_Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_Invoice_Table_Users" Association="Self.FK_Table_Invoice_Table_Users">
+            <End Role="Table_Users" EntitySet="Table_Users" />
+            <End Role="Table_Invoice" EntitySet="Table_Invoice" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -23,6 +119,17 @@
       <Schema Namespace="BookStoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="BookStoreEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Table_Products" EntityType="BookStoreModel.Table_Products" />
+          <EntitySet Name="Table_Users" EntityType="BookStoreModel.Table_Users" />
+          <EntitySet Name="Table_Invoice" EntityType="BookStoreModel.Table_Invoice" />
+          <EntitySet Name="View_Invoice" EntityType="BookStoreModel.View_Invoice" />
+          <AssociationSet Name="FK_Table_Invoice_Table_Products" Association="BookStoreModel.FK_Table_Invoice_Table_Products">
+            <End Role="Table_Products" EntitySet="Table_Products" />
+            <End Role="Table_Invoice" EntitySet="Table_Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_Invoice_Table_Users" Association="BookStoreModel.FK_Table_Invoice_Table_Users">
+            <End Role="Table_Users" EntitySet="Table_Users" />
+            <End Role="Table_Invoice" EntitySet="Table_Invoice" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Table_Products">
           <Key>
@@ -32,7 +139,82 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Image" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Price" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Table_Invoice" Relationship="BookStoreModel.FK_Table_Invoice_Table_Products" FromRole="Table_Products" ToRole="Table_Invoice" />
         </EntityType>
+        <EntityType Name="Table_Users">
+          <Key>
+            <PropertyRef Name="pkID" />
+          </Key>
+          <Property Name="pkID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Family" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" Nullable="false" MaxLength="11" FixedLength="true" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Address2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Table_Invoice" Relationship="BookStoreModel.FK_Table_Invoice_Table_Users" FromRole="Table_Users" ToRole="Table_Invoice" />
+        </EntityType>
+        <EntityType Name="Table_Invoice">
+          <Key>
+            <PropertyRef Name="pkID" />
+          </Key>
+          <Property Name="pkID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fkUserID" Type="Int32" Nullable="false" />
+          <Property Name="fkProductID" Type="Int32" Nullable="false" />
+          <Property Name="status" Type="Boolean" Nullable="false" />
+          <Property Name="transID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="trackingID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="factorNumber" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Table_Products" Relationship="BookStoreModel.FK_Table_Invoice_Table_Products" FromRole="Table_Invoice" ToRole="Table_Products" />
+          <NavigationProperty Name="Table_Users" Relationship="BookStoreModel.FK_Table_Invoice_Table_Users" FromRole="Table_Invoice" ToRole="Table_Users" />
+        </EntityType>
+        <EntityType Name="View_Invoice">
+          <Key>
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Price" />
+            <PropertyRef Name="pkID" />
+            <PropertyRef Name="fkUserID" />
+            <PropertyRef Name="fkProductID" />
+            <PropertyRef Name="status" />
+            <PropertyRef Name="transID" />
+            <PropertyRef Name="trackingID" />
+            <PropertyRef Name="factorNumber" />
+          </Key>
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
+          <Property Name="pkID" Type="Int32" Nullable="false" />
+          <Property Name="fkUserID" Type="Int32" Nullable="false" />
+          <Property Name="fkProductID" Type="Int32" Nullable="false" />
+          <Property Name="status" Type="Boolean" Nullable="false" />
+          <Property Name="transID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="trackingID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="factorNumber" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Table_Invoice_Table_Products">
+          <End Type="BookStoreModel.Table_Products" Role="Table_Products" Multiplicity="1" />
+          <End Type="BookStoreModel.Table_Invoice" Role="Table_Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_Products">
+              <PropertyRef Name="pkID" />
+            </Principal>
+            <Dependent Role="Table_Invoice">
+              <PropertyRef Name="fkProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_Invoice_Table_Users">
+          <End Type="BookStoreModel.Table_Users" Role="Table_Users" Multiplicity="1" />
+          <End Type="BookStoreModel.Table_Invoice" Role="Table_Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_Users">
+              <PropertyRef Name="pkID" />
+            </Principal>
+            <Dependent Role="Table_Invoice">
+              <PropertyRef Name="fkUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -46,6 +228,48 @@
                 <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="pkID" ColumnName="pkID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_Users">
+            <EntityTypeMapping TypeName="BookStoreModel.Table_Users">
+              <MappingFragment StoreEntitySet="Table_Users">
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Family" ColumnName="Family" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="pkID" ColumnName="pkID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_Invoice">
+            <EntityTypeMapping TypeName="BookStoreModel.Table_Invoice">
+              <MappingFragment StoreEntitySet="Table_Invoice">
+                <ScalarProperty Name="factorNumber" ColumnName="factorNumber" />
+                <ScalarProperty Name="trackingID" ColumnName="trackingID" />
+                <ScalarProperty Name="transID" ColumnName="transID" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="fkProductID" ColumnName="fkProductID" />
+                <ScalarProperty Name="fkUserID" ColumnName="fkUserID" />
+                <ScalarProperty Name="pkID" ColumnName="pkID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_Invoice">
+            <EntityTypeMapping TypeName="BookStoreModel.View_Invoice">
+              <MappingFragment StoreEntitySet="View_Invoice">
+                <ScalarProperty Name="factorNumber" ColumnName="factorNumber" />
+                <ScalarProperty Name="trackingID" ColumnName="trackingID" />
+                <ScalarProperty Name="transID" ColumnName="transID" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="fkProductID" ColumnName="fkProductID" />
+                <ScalarProperty Name="fkUserID" ColumnName="fkUserID" />
+                <ScalarProperty Name="pkID" ColumnName="pkID" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

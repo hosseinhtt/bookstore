@@ -26,5 +26,8 @@ namespace bookstore.Models
         }
     
         public virtual DbSet<Table_Products> Table_Products { get; set; }
+        public virtual DbSet<Table_Users> Table_Users { get; set; }
+        public virtual DbSet<Table_Invoice> Table_Invoice { get; set; }
+        public virtual DbSet<View_Invoice> View_Invoice { get; set; }
     }
 }

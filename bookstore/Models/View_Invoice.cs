@@ -12,20 +12,16 @@ namespace bookstore.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Table_Products
+    public partial class View_Invoice
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Table_Products()
-        {
-            this.Table_Invoice = new HashSet<Table_Invoice>();
-        }
-    
-        public int pkID { get; set; }
         public string Name { get; set; }
-        public string Image { get; set; }
         public int Price { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Table_Invoice> Table_Invoice { get; set; }
+        public int pkID { get; set; }
+        public int fkUserID { get; set; }
+        public int fkProductID { get; set; }
+        public bool status { get; set; }
+        public string transID { get; set; }
+        public string trackingID { get; set; }
+        public int factorNumber { get; set; }
     }
 }
