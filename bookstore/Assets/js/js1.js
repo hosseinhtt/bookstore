@@ -73,7 +73,7 @@
                     '</td>'+
                     '<td>' + res.res[item].Price + ' </td>'+
                     '<td>' +
-                    '<input type="number" class="quantity" value="' + myObj[res.res[item].pkID] +'" min="1" readonly/>' +
+                    '<input type="number" class="quantity" value="' + myObj[res.res[item].pkID] +'" min="1" />' +
                     '<a href="#" class="remove">حذف</a>'+
                     '</td>'+
                     ' <td class="itemTotal">' + res.res[item].Price +" " + 'تومان</td>'+
@@ -143,7 +143,7 @@ function addtocard(a) {
 }
 
 function updatebadge() {
-
+    alert("hi js");
     var items = localStorage.getItem("basket").split(",");
 
     document.getElementById("shop_badge").innerHTML = items.length;

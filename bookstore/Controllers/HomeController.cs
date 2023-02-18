@@ -34,6 +34,11 @@ namespace bookstore.Controllers
 
         public ActionResult Shipping()
         {
+            var user = getCurrentUser();
+            ViewBag.Address = user.Address1;
+
+
+
             return View();
         }
 

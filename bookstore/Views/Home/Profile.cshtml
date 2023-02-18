@@ -36,16 +36,79 @@
     <link href="~/Assets/css/Profile/bootstrap-rtl.css" rel="stylesheet" />
     <link href="~/Assets/css/Profile/font-awesome.min.css" rel="stylesheet" />
     <link href="~/Assets/css/Profile/Ptofile.css" rel="stylesheet" />
+    <link href="~/Assets/css/index.css" rel="stylesheet" />
+
     <script src="https://kit.fontawesome.com/f14cbea078.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
-<body  class="profile-page" data-spy="scroll" data-target=".navbar" data-offset="50">
+<body class="profile-page" data-spy="scroll" data-target=".navbar" data-offset="50">
     @Html.AntiForgeryToken()
     <!-- The HEADER -->
     <!-- sidebar -->
+
+    <header class="header">
+
+        <div class="header-1">
+
+            <a href="‍‍Home/Index" class="logo"> <i class="fas fa-book"></i> کتابخانه </a>
+
+
+
+            <div class="icons">
+                <div id="search-btn" class="fas fa-search"></div>
+                <a href="/Home/Favourite" class="dropdown-toggle" data-toggle="dropdown">
+                    <span class="fas fa-heart"></span>
+                    <span id="fav_badge" class="badge badge-bg-1"></span>
+                </a>
+
+
+                <a href="~/Home/Shipping" class="dropdown-toggle" data-toggle="dropdown">
+                    <span class="fas fa-shopping-cart"></span>
+                    <span id="shop_badge" class="badge badge-bg-1"></span>
+                </a>
+                <div class="dropdown">
+
+                    <div onclick="myFunction()" class="dropbtn fas fa-user"></div>
+
+                    <div id="myDropdown" class="dropdown-content">
+                        <ul>
+
+                            <li><a href="~/Home/Login">ورود</a></li>
+                            <li><a href="~/Home/Profile">پروفایل</a></li>
+                            <li><a href="~/Home/logout">خروج از حساب</a></li>
+                        </ul>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="header-2">
+            <nav class="navbar">
+                <a href="#home">خانه</a>
+                <a href="#featured">ویژه</a>
+                <a href="#arrivals">جدیدها</a>
+                <a href="#reviews">نظرات</a>
+            </nav>
+        </div>
+
+    </header>
+
+    <!-- header section ends -->
+    <!-- bottom navbar  -->
+
+    <nav class="bottom-navbar">
+        <a href="#home" class="fas fa-home"></a>
+        <a href="#featured" class="fas fa-list"></a>
+        <a href="#arrivals" class="fas fa-tags"></a>
+        <a href="#reviews" class="fas fa-comments"></a>
+        <a href="#blogs" class="fas fa-blog"></a>
+    </nav>
+
     <main>
         <div class="container-fluid">
             <div class="row">
@@ -80,38 +143,38 @@
                         <div class="tab-pane fade in active">
 
                             <div id="edit-btn">
-                                <a href="#" onclick="makeEdit()"><span class="fas fa-pencil"></span></a>
+                                <a href="" onclick="makeEdit()"><span class="fas fa-pencil"></span></a>
                                 <span>اطلاعات کاربری</span>
 
                             </div>
                             <br />
 
-                            <div id="about">
+                            <div id="about" class="editAbout">
                                 <p>
                                     <span><i class="fa fa-user-circle"></i><strong>نام:</strong></span>
 
-                                    <input class="editable" type="text" value="@ViewBag.Name" name="name" id="fname" required>
+                                    <input class="editable" type="text" value="@ViewBag.Name" name="name" id="fname" size="60" STYLE="color: #FFFFFF; font-family: Verdana; font-weight: bold; font-size: 12px; background-color: #262927; " required>
                                 </p>
                                 <p>
                                     <span><i class="fa fa-dot-circle-o"></i><strong>نام خانوادگی :</strong></span>
-                                    <input class="editable" type="text" value="@ViewBag.Family" name="" id="lname" required>
+                                    <input class="editable" type="text" value="@ViewBag.Family" name="" id="lname" size="60" STYLE="color: #FFFFFF; font-family: Verdana; font-weight: bold; font-size: 12px; background-color: #262927; " required>
                                 </p>
 
                                 <p>
                                     <span><i class="fa fa-phone"></i><strong>تلفن تماس :</strong></span>
-                                    <input class="editable" type="number" value="@ViewBag.Phone" name="" id="phone" required>
+                                    <input class="editable" type="number" value="@ViewBag.Phone" name="" id="phone" size="60" STYLE="color: #FFFFFF; font-family: Verdana; font-weight: bold; font-size: 12px; background-color: #262927; " required>
                                 </p>
                                 <p>
                                     <span><i class="fa fa-envelope"></i><strong>پست الکترونیک :</strong></span>
-                                    <input class="editable" type="email" value="@ViewBag.Email" name="" id="email" required>
+                                    <input class="editable" type="email" value="@ViewBag.Email" name="" id="email" align="left" size="60" STYLE="color: #FFFFFF; font-family: Verdana; font-weight: bold; font-size: 12px; background-color: #262927; " required>
                                 </p>
                                 <p>
                                     <span><i class="fa fa-key"></i><strong>رمز عبور :</strong></span>
-                                    <input class="editable" type="password" value="@ViewBag.Password" name="" id="password" required>
+                                    <input class="editable" type="password" value="@ViewBag.Password" name="" id="password" size="60" STYLE="color: #FFFFFF; font-family: Verdana; font-weight: bold; font-size: 12px; background-color: #262927; " required>
                                 </p>
                                 <p>
                                     <span><i class="fa fa-map-marker"></i><strong>آدرس :</strong></span>
-                                    <input class="editable" type="text" value="@ViewBag.Address" name="" id="address" required>
+                                    <input class="editable" type="text" value="@ViewBag.Address" name="" id="address" size="60" STYLE="color: #FFFFFF; font-family: Verdana; font-weight: bold; font-size: 12px; background-color: #262927; " required>
                                 </p>
                                 <button class="btn btn-success" onclick="register()">ثبت </button>
                             </div>
@@ -291,5 +354,26 @@
     <script src="~/Assets/js/Profile/Profile.js">
     </script>
     <script src="~/Assets/js/js1.js"></script>
+    <script>
+        /* When the user clicks on the button,
+        toggle between hiding and showing the dropdown content */
+        function myFunction() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function (event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
 </body><!-- This template has been downloaded from Webrubik.com -->
 </html>

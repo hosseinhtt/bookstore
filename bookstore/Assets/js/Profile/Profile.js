@@ -4,6 +4,9 @@
 
 
 });
+function makeEdit() {
+    $(".editable").css("background-color", "#fff");
+}
 
 
 function register() {

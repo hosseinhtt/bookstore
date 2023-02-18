@@ -24,8 +24,7 @@ namespace bookstore.Controllers
         private string pin = "aqayepardakht";
 
 
-        private new string Redirect = "https://localhost:44385/pay/CallBack";
-
+        private new string Redirect = "https://localhost:44302/pay/CallBack";
 
 
         [HttpPost]
@@ -56,7 +55,25 @@ namespace bookstore.Controllers
                     var content = new FormUrlEncodedContent(values);
 
                     var response = await client.PostAsync(GatewaySend, content);
-                    string responseString = await response.Content.ReadAsStringAsync();
+                    dynamic responseString = await response.Content.ReadAsStringAsync();
+
+                    //Controller account = JsonConvert.DeserializeObject<Controller>(responseString);
+
+                    //Console.WriteLine(account.transid);
+
+                    //responseString = JsonSerializer.Deserialize<responseString>(jsonString);
+
+                    //Console.WriteLine($"Date: {responseString?.status}");
+                    //Console.WriteLine($"TemperatureCelsius: {responseString?.transid}");
+
+
+                    //string status = responseString.status;
+                    //string trid = responseString.transid;
+
+                    //dynamic stuff = JObject.Parse("responseString");
+                    //string status= stuff["status"];
+                    //string transid= stuff["transid"];
+
 
                     if (responseString.Length > 3)
                     {
@@ -68,6 +85,7 @@ namespace bookstore.Controllers
                             d.transID = responseString;
                         }
                         context.SaveChanges();
+
 
 
 
@@ -103,13 +121,12 @@ namespace bookstore.Controllers
         //}
 
         //[HttpPost]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         [AllowAnonymous]
         [ActionName("CallBack")]
         public async System.Threading.Tasks.Task<ActionResult> CallBackAsync()
         {
-            if (!string.IsNullOrEmpty(Request.Form["transId"]))
+            if (!string.IsNullOrEmpty(Request.Form["transid"]))
             {
                 string tid = Request.Form["transID"].ToString();
 
@@ -128,7 +145,7 @@ namespace bookstore.Controllers
                             { "pin", pin },
                             { "amount", amount },
 
-                            { "transID", Request.Form["transID"].ToString() },
+                            { "transid", Request.Form["transid"].ToString() },
                         };
 
 
@@ -173,7 +190,8 @@ namespace bookstore.Controllers
                             }
                             catch (Exception ex)
                             {
-
+                                ViewBag.Success = "0"; //aya dorost ast?
+                                ViewBag.message = ex.Message;
 
                             }
                         }
